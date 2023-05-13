@@ -1,23 +1,25 @@
-import useFetch from './useFetch'
+import useUserData from "./userData"
+import { useState } from "react"
 import List from "./List"
 
-
+let initdata 
 function Main() {
- const  [data] = useFetch('data.json')
+  const [userdata, setUserData] = useState(initdata)
+  
+  [initdata] = useUserData('data.json')
 
-  if (data){
-    const parent = data[0]
-
-    const siblings = data.filter(sibling =>
+  if (userdata){
+    const parent = userdata[0]
+    const siblings = userdata.filter(sibling =>
       parent.child.indexOf (sibling.id) !== -1)
 
     return (
       <main className=" w3-auto">
          {siblings.map(sibling => 
             <div key={sibling.id} className="w3-border-bottom w3-container">
-              <h3>{sibling.title}</h3>
+              <p className='middleTitle'>{sibling.title}</p>
               
-              <List data={data} sibling={sibling} />
+              <List userdata={userdata} sibling={sibling} />
             </div>
             )
           }
