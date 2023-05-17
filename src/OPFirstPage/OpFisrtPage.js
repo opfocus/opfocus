@@ -14,7 +14,6 @@ function OpFirstPage() {
       <Banner/>
       <Welcome/>
       <Main/>
-      ss
     </>
   )
 }

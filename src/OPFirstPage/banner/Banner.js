@@ -11,7 +11,7 @@ function Banner () {
           请您在点击前做好调查工作！
         </span>
           <button
-          className="w3-button w3-right"
+          className="w3-button"
           onClick={() => setBanner(false)}>
             <i class="fa-solid fa-x"></i>
             </button>

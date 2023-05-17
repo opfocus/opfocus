@@ -1,15 +1,17 @@
  @import 'w3';
+$mycolor : #ff0420;
 
 .flex {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  padding: 0px 30px;
 }
 
 .largeTitle {
   font-size: 3em;
   font-weight: 700;
-  color: #ff0420;
+  color: $mycolor;
 }
 .middleTitle {
   font-size: 1.5em;
@@ -21,3 +23,9 @@
   font-weight: 400;
   // color: #ff0420;
 }
+
+// form {
+//  background-color: #ff0420;
+//  opacity: 0.8;
+// }
+

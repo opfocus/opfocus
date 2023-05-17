@@ -1,7 +1,6 @@
 
 
 function List ({userdata, sibling}) {
-
   const children = userdata.filter(child => 
     sibling.child.indexOf(child.id) !== -1
     )

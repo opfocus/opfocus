@@ -13,13 +13,12 @@ function ThemeColor() {
     mybody.color = 'black'
   }
   return (
-      <button 
-      className="w3-btn w3-col m1"
+      <button className="w3-btn"
         onClick={() => setThemeColor(!themeColor)}>
         {themeColor===false? 
-        <i class="fa-solid fa-moon"></i>
+        <i className="fa-solid fa-moon"></i>
         :
-        <i class="fa-regular fa-sun"></i>
+        <i className="fa-regular fa-sun"></i>
         } 
       </button>    
     // </div>

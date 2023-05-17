@@ -3,11 +3,11 @@
 function Logo({className}) {
 
   return (
-    <div className={className}>
+    <div className="w3-hide-small">
       <img
        src="optimism-base.webp" 
        alt="OP and Base logo"
-       style={{width: '100%'}}
+       style={{width: '150px'}}
       />
     </div>
   )
