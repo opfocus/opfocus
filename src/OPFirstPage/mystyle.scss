@@ -1,31 +1,172 @@
+//  you can find '--primary-background-color' and '--primary-text-color'
+//--set in file src\OPFirstPage\header\topNav\ThemeColor.js 
+ 
+
  @import 'w3';
 $mycolor : #ff0420;
+$media-pix: 24px;
+
+@mixin font-weights($val) {
+  @if $val == heavy {
+    font-weight: 700;
+  }
+  @else {
+    font-weight: 400;
+  }
+}
+
+@mixin font-sizes($val) {
+  @if $val == largest {
+    font-size: 4em;
+  }
+  @else if $val == large {
+    font-size: 3em;
+  }
+  @else if $val == medium {
+    font-size: 1.5em;
+  }
+
+  @else if $val == small {
+    font-size: 0.8em;
+  }
+  @else {
+    font-size: 1em;
+  }
+}
+
+@mixin padding-location($val) {
+  @if $val == section {
+    padding: 96px 0px;
+  }
+}
+@mixin logo-sizes($val) {
+  @if $val == large {
+    width: 64px;
+    height: 64px;
+  }
+  @else  {
+    width: 32px;
+    height: 32px; 
+  }
+}
+body {
+  box-sizing: border-box;
+  background-color: var(--primary-background-color);
+  color:var(--primary-text-color)
+}
 
 .flex {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  padding: 0px 30px;
 }
 
-.largeTitle {
-  font-size: 3em;
-  font-weight: 700;
+
+.title-block {
+  @extend .w3-center;
+  @extend .w3-hide-small;
+  @include padding-location(section);
+}
+
+.large-title {
+  @include font-sizes(largest);
+  @include font-weights(heavy);
   color: $mycolor;
 }
-.middleTitle {
-  font-size: 1.5em;
-  font-weight: 700;
+.medium-title {
+  @include font-sizes(large);
+  @include font-weights(heavy)
 }
 
-.text {
-  font-size: 1em;
-  font-weight: 400;
-  // color: #ff0420;
+.title {
+  @include font-sizes(medium);
+  @include font-weights(heavy);
+  @extend .w3-opacity;
 }
 
-// form {
-//  background-color: #ff0420;
-//  opacity: 0.8;
-// }
+.large-text {
+  @include font-sizes(medium);
+  @include font-weights(heavy);
+}
 
+.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+.sign-form {
+  @extend .w3-padding;
+  @extend .w3-padding-32;
+  @extend .w3-card-4;
+  @extend .w3-round;
+  background-color: var(--primary-background-color);
+  color: var(--primary-text-color); 
+}
+
+.sidebar {
+ @extend .w3-sidebar;
+ @extend .w3-col;
+ @extend .l4;
+ @extend .m6;
+ @extend .w3-card;
+ @extend .w3-animate-right;
+ background-color: var(--primary-background-color);
+ color: var(--primary-text-color);
+ top:0px;
+}
+
+
+.medias  {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  margin: 0px;
+  grid-column-gap: $media-pix;
+  grid-row-gap: $media-pix;
+}
+  .media {
+    @extend .w3-card;
+    @extend .w3-round-medium;
+    text-decoration-line: none;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: $media-pix;
+
+    .chain-logo{
+      @include logo-sizes(normal);
+      position: absolute;
+      top: $media-pix;
+      right: $media-pix;
+    }
+
+    .media-logo {
+    @include logo-sizes(large);
+    @extend .w3-round-medium;
+    }
+
+    .media-title {
+      @include font-sizes(medium);
+      @include font-weights(heavy);
+      font-style: italic;
+    }
+    
+    .media-description {
+      @include font-sizes(small)
+    }
+  }
+  
+  @media screen and (max-width: 992px) {
+    .medias {
+      grid-template-columns: repeat(2, 1fr);
+  }
+  }
+
+  @media screen and (max-width: 700px) {
+    .medias {
+      grid-template-columns: repeat(1, 1fr);
+  }
+  }

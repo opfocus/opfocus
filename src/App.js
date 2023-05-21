@@ -1,6 +1,4 @@
-
-import OpFirstPage from './OPFirstPage/OpFisrtPage'
-
+import OpFirstPage from "./OPFirstPage/OpFisrtPage"
 
 function App() {
 

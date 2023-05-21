@@ -1,13 +1,13 @@
 import ThemeColor from "./ThemeColor"
 import SignIn from "./SignIn"
-import Others from "./Others"
 import Language from "./Language"
+import PostsAndComments from "./posts_comments/PostsAndComments"
 
-function TopNav() {
+function Topnav() {
 
   return (
     <div >
-      <Others/>
+      <PostsAndComments/>
       <Language/>
       <SignIn/>
       <ThemeColor/>
@@ -16,4 +16,4 @@ function TopNav() {
 }
 
 
-export default TopNav
+export default Topnav

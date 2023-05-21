@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { handleSubmit } from "../myFunciton/myFunction"
-function Log({setStatus, setAccount}) {
-  const [isErr, setIsErr] = useState(false)
+function LogIn({setStatus, setAccount}) {
+  const [isErr, setIsErr] = useState(false) //username or passwords has been included in the user info database
 
   const handleLogSubmit =async (e, url) => {
     let [data] = await handleSubmit(e, url)
@@ -18,7 +18,7 @@ function Log({setStatus, setAccount}) {
   return (
     <form 
       onSubmit={(e) => handleLogSubmit(e, 'http://localhost:3000/data/user')}
-      className=" w3-padding w3-padding-top-32">
+    >
       <label>
         用户名：
         <input 
@@ -49,14 +49,14 @@ function Log({setStatus, setAccount}) {
       >
         <button
           href="#" 
-          className="w3-left w3-btn"
+          className="w3-left w3-button"
           onClick={()=>setStatus('registering')}
         >
           没有账号？
         </button>
         <input 
           type="submit" 
-          className="w3-btn w3-right" 
+          className="w3-button w3-right" 
           value="登录"
         />
       </div>
@@ -64,4 +64,4 @@ function Log({setStatus, setAccount}) {
   )
 }
 
-export default Log
+export default LogIn

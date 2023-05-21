@@ -24,7 +24,7 @@ function Register({setStatus}) {
     <>
     <form 
       onSubmit={e => handleRegisterSubmit(e, "http://localhost:3000/data/user/register")} 
-      className=" w3-padding w3-padding-top-32">
+    >
       <label >
         用户名：
         <input 
@@ -79,7 +79,7 @@ function Register({setStatus}) {
       <div 
         className="w3-row">
           <button
-            className="w3-left w3-btn"
+            className="w3-left w3-button"
             onClick={()=>setStatus("logging")}
           >
           已有账号？
