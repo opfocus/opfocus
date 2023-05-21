@@ -1,4 +1,4 @@
-//!! need to be fixed:The order of data returned by the database cannot be
+//!! need to be fixed when use database:The order of data returned by the database cannot be
 //!! -guaranteed
 // !!if can't access database ,should Adjust comment statement   use: [userdata] = usFetch('data.json')   
 import { useState, useEffect } from "react" 
@@ -6,13 +6,14 @@ import List from "./List"
 let didInit = false
 function Main() {
   const [userdata, setUserData] = useState()
-  // if can't access database ,should use the following line -
-  // [userdata] = usFetch('data.json')   
-  //The order of data returned by the database cannot beguaranteed
+ 
+
   useEffect(() => {
     if (!didInit) {
       didInit = true
-      fetch("http://localhost:3000/data/content_data")
+      // fetch("http://localhost:3000/data/content_data")
+       // if can't access database ,should use the following line -
+      fetch("data.json")   
       .then((res) => res.json())
       .then((data) => setUserData(data))
     }
