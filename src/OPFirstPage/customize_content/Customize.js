@@ -77,7 +77,9 @@ if(localStorage)
               localData.map(item => (
                 <a 
                   className="text w3-button"
-                  href={item.customizeWebLink}
+                  target="_blank"
+                  href={item.customizeWebLink} 
+                  rel="noreferrer"
                 >
                   {item.customizeWebName}
                 </a> 
