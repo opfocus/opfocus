@@ -1,9 +1,9 @@
-import OpFirstPage from "./OPFirstPage/OpFisrtPage"
+import Focusop from "./focusop/Focusop"
 
 function App() {
 
   return (
-    <OpFirstPage/>
+    <Focusop/>
   )
 }
 

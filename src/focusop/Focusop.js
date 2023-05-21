@@ -8,7 +8,7 @@ import Welcome from './welcome/Welcome'
 import Customize from './customize_content/Customize'
 import Medias from './media_content/Medias'
 
-function OpFirstPage() {
+function Focusop() {
   const [account, setAccount] = useState()  // user account
   const value = [account, setAccount]
 
@@ -26,4 +26,4 @@ function OpFirstPage() {
   )
 }
 
-export default OpFirstPage
+export default Focusop
