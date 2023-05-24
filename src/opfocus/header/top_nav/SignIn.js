@@ -1,62 +1,42 @@
-import { useState, useContext} from "react"
-import UserContext from "../../myFunciton/userContext"
-import LogIn from "../../my_form/LogIn"
-import Register from "../../my_form/Register_form"
+ // Currently, user registration and login are not provided, and users are anonymous
+//  
+import { useState, } from "react"
+import {app} from '../../../index'
 
 function SignIn() {
 
-  const [account, setAccount] = useContext(UserContext)
-  const [status, setStatus] = useState("init")  // Sign in status
+  const [isUserInfo, setIsUserInfo] = useState(false) 
 
   return (
-    <>
-      {/* a sign in button or a logged user name display on top nav */}
+    <div  style={{
+      display:"inline-block",
+      position:"relative"
+    }}>
+      {/* a  button:  user name display on top nav */}
       <button 
         className="w3-btn"
-        onClick={() => {
-           status === 'init'&& setStatus("logging") 
-          }}
+        onClick={() => setIsUserInfo(!isUserInfo)}
       >
-        { 
-          status === 'logged'?
-           account.nickname
-          :
-          "登录"
-        } 
+        匿名
       </button>
-      {/* modal:when clicked above sign in button display modal*/}
-      <div 
-        className="w3-modal" 
-        style={
-          status === 'logging' || status === 'registering' ?
-            {display:"block"}
-            : 
-            {display:"none"}
+      {
+        isUserInfo
+        &&
+        app.currentUser
+        && 
+        <div  style={
+            {
+              display:'block',
+              position: 'absolute',
+              backgroundColor: 'black',
+              width:'100px',
+            }
         }>
-        {/* modal content */}
-        <div 
-          className = "w3-modal-content sign-form">
-          {/* close modal button, display on the modal top right*/}
-          <button
-            className="w3-display-topright w3-button w3-xlarge"
-            onClick={() => setStatus("init")}
-          >
-            &times;
-          </button>
-          {/*there are different form here: sign in(log) or sign up(register)*/}
-          {
-          status === 'logging' 
-          &&
-          <LogIn setStatus={setStatus} setAccount={setAccount}/>
-          }
-          {
-          status=== 'registering'
-          &&
-          <Register setStatus={setStatus}/>
-          }          
+          <span>ID: </span>
+          <span>...{app.currentUser.id.slice(-5, )}</span>
         </div>
-      </div>
-    </>
+      }
+    </div>
   )
 }
 

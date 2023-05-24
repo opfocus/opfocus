@@ -1,62 +1,27 @@
-
-import { useState, useContext } from "react"
-import UserContext from "../../../myFunciton/userContext"
+import { useState} from "react"
 import Post from "./side_content/Post"
+// graphql
+import {GET_POSTS, INSERT_POST} from '../../../../graphql-operations'
+import {useQuery, useMutation } from "@apollo/client"
+import { app } from "../../../../index"
+
+
 
 
 function PostsAndComments() {
   const [isOpenPosts,setIsOpenPosts] = useState(false)
-  const [isAddPost, setIsAddPost] = useState(false)
-  const [postData, setPostData] = useState()
-  const [newPost, setNewPost] = useState ({
-      newPostTitle: '',
-      newPostText: ''
-    })
-  const [account, setAccount] = useContext(UserContext)
 
-  const handleClick =  () => {
-    fetch('http://localhost:3000/data/blog/posts')
-    .then(res => res.json())
-    .then(data => setPostData(data))
-    .then(() => setIsOpenPosts(true))
-  }
-  const handleTitleChange = (e) => {
-    const nextPost = {...newPost, newPostTitle: e.target.value}
-    setNewPost(nextPost)
-  }
-  const handleTextChange = (e) => {
-    const nextPost = {...newPost, newPostText: e.target.value}
-    setNewPost(nextPost)
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    
-    const formData = new FormData(e.target)
-    const request = Object.fromEntries(formData.entries())
-    const options = {
-      method: "post",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        title: request.newPostTitle,
-        body: request.newPostText,
-        user_id: account._id,
-        user_nickname: account.nickname,
-        
-      })
-    }
-    setIsAddPost(false)
-    fetch('http://localhost:3000/data/blog/posts/insert', options)
-    .then(() => handleClick())
-  }
-// debugger
+
+  const {data} = useQuery(GET_POSTS)
+
+  const posts = data? data.posts : null
+
   return (
     <>
       {/* a button on nav, clicked will change state and display posts */}
       <button
         className="w3-btn"
-        onClick={handleClick}
+        onClick={() => setIsOpenPosts(true)}
       >
         <i className="fa-solid fa-bars"></i>
       </button>
@@ -64,17 +29,78 @@ function PostsAndComments() {
       {
         isOpenPosts === true
         &&
+        <Posts 
+          setIsOpenPosts={setIsOpenPosts}
+          posts={posts}
+        />
+      }
+    </> 
+  )
+}
+export default PostsAndComments
+
+// posts component
+function Posts({setIsOpenPosts, posts}) {
+  const [isAddPost, setIsAddPost] = useState(false)
+  const [newPost, setNewPost] = useState ({
+    _id: 'new1',
+    title: '',
+    body: ''
+  })
+  // prePosts use to  keep watch over  posts value change  
+  const [prePosts, setPrePosts] = useState()
+  // tempPosts use to add newPost to display on screen. it not
+  //  from database, becacuse request to datebase too slow
+  const [tempPosts, setTempPosts] = useState()
+
+  if (prePosts !== posts){
+    setTempPosts(posts)
+    setPrePosts(posts)
+  }
+
+  const [insertOnePost, ] = useMutation(INSERT_POST)
+
+  const handleTitleChange = (e) => {
+    const nextPost = {...newPost, title: e.target.value}
+    setNewPost(nextPost)
+  }
+  const handleTextChange = (e) => {
+    const nextPost = {...newPost, body: e.target.value}
+    setNewPost(nextPost)
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsAddPost(false)
+    setTempPosts([newPost, ...tempPosts])
+    setNewPost({
+      _id: newPost._id + '1',
+      title: '',
+      body: ''
+    })
+    await insertOnePost({
+      variables: {
+        mutation: {
+          title: newPost.title,
+          user_id: app.currentUser.id,
+          user_nickname: '匿名',
+          body: newPost.body,
+          like:1,
+          date: Date()
+        }
+      }
+    })
+  }
+
+  return (
+    <>
         <div 
-          className=" sidebar w3-display-content"
+          className=" sidebar w3-display-content w3-padding-64"
           style={{right:"0px"}}
         >
           {/* a button clicked will  close posts block */}
           <button 
-            className="w3-button w3-display-topright"
-            onClick={()=> {
-              setIsOpenPosts(false)
-              setIsAddPost(false)
-            }}
+            className="w3-button w3-opacity w3-display-topright"
+            onClick={() => setIsOpenPosts(false)}
           >
             <i class="fa-solid fa-x"></i>
           </button>
@@ -82,85 +108,83 @@ function PostsAndComments() {
           {
             isAddPost?
             <button 
-            className="w3-button w3-display-topleft"
+            className="w3-button w3-display-topleft w3-opacity"
             onClick={()=> setIsAddPost(false)}
             >
               关闭
             </button>
             :
             <button 
-            className="w3-button w3-display-topleft"
+            className="w3-button w3-display-topleft w3-opacity"
             onClick={()=> setIsAddPost(true)}
            >
             发帖
           </button>
           }
-          {/* block title */}
-          <div className="w3-center">
-            <h3>讨论区</h3>
-          </div>
+  
           {/* add post form */}
           {
             isAddPost
             && 
             <form className="w3-container"
-              onSubmit={(e) => handleSubmit(e)}>
+            onSubmit={(e) => handleSubmit(e)}
+            >
               <label>
                 标题： 
                 <input
-                name="newPostTitle"
                 className="w3-input"
                 placeholder="需登录,长度少于20字符"
                 onChange={(e)=> handleTitleChange(e)}
+                value={newPost.title}
+                  />
+              </label>
+              <label>
+                  正文： 
+                  <textarea
+                  rows= '5'
+                  className="w3-input "
+                  placeholder="需登录,长度少于50字符"
+                  onChange={(e) => handleTextChange(e)}
+                  value={newPost.body}
+                  style={{resize: 'none'}}
+                  />
+              </label>
+              {
+                newPost.title.length > 0 
+                && 
+                newPost.title.length <= 20
+                &&
+                newPost.body.length > 0
+                &&
+                newPost.body.length <= 50
+                &&
+                app.currentUser
+                ?
+                <input 
+                type='submit'
+                  className="w3-button w3-right w3-small"
                 />
-            </label>
-            <label>
-                正文： 
-                <textarea
-                rows= '5'
-                name="newPostText"
-                className="w3-input "
-                placeholder="需登录,长度少于50字符"
-                onChange={(e) => handleTextChange(e)}
+                :
+                <input
+                type='submit'
+                  className="w3-button w3-right w3-small"
+                  disabled
                 />
-            </label>
-            {
-              newPost.newPostTitle.length > 0 
-              && 
-              newPost.newPostTitle.length <= 20
-              &&
-              newPost.newPostText.length > 0
-              &&
-              newPost.newPostText.length <= 50
-              &&
-              account
-              ?
-              <input 
-                type="submit"
-                className="w3-button w3-right w3-small"
-              />
-              :
-              <input 
-              type="submit"
-              className="w3-button w3-right w3-small"
-              disabled
-            />
-            }
-
+              }
             </form>
           }
           {/* posts */}
           {
-            postData.map(item => (
+            tempPosts
+            &&
+            tempPosts.map(item => (
               <Post 
                 key={item._id}
                 item={item}
               />)
             )
           }
-        </div>
-      }
-    </> 
+          </div>
+    </>
   )
 }
-export default PostsAndComments

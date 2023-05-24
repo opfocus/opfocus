@@ -1,60 +1,63 @@
+import { useQuery } from "@apollo/client";
 import { useState } from "react";
+import { GET_POST_COMMENTS } from "../../../../../graphql-operations";
 
 import Comment from "./Comment"
 
 
 function Post({item}) {
       const [postsAndCommentStatus, setPostsAndCommentStatus] = useState("displayPosts")
-      const [comments, setComments] = useState()
 
-      const handleOpenCommentsClick = (item) => {
-        fetch("http://localhost:3000/data/blog/comments/" + item._id) 
-        .then((res) => res.json()) 
-        .then((data) => setComments(data)) 
-        .then(() => setPostsAndCommentStatus("displayComments"));
-       };
+      const {data} = useQuery(GET_POST_COMMENTS, {
+          variables: {
+            query: {
+              title_id: item._id
+            }}
+        })
+
+      const comments = data? data.comments : null
+
+
 
     return (
       <>
-        <div className="w3-container w3-display-container w3-padding-16">
+        <div className="w3-container w3-display-container w3-border-bottom">
           <p><strong>{item.title}</strong></p>
           <p>{item.body}</p>
-          <div className="w3-row w3-small">
-            {
-              postsAndCommentStatus === 'displayPosts' 
-              &&
-              <button
-                className="w3-button w3-small w3-display-bottomright"
-                onClick={() => handleOpenCommentsClick(item)}
-              >
-                评论
-              </button>
-            }
-            {
-              postsAndCommentStatus !== 'displayPosts' 
-              &&
-              <button
-                className="w3-button w3-small w3-right"
-                onClick={()=> setPostsAndCommentStatus('displayPosts')}
-              >
-                关闭评论
-              </button>
-            }
-          </div>
+          {
+            postsAndCommentStatus === 'displayPosts' 
+            &&
+            <button
+              className="w3-button w3-small w3-opacity w3-display-bottomright"
+              onClick={() => setPostsAndCommentStatus("displayComments")}
+            >
+              评论
+            </button>
+          }
+          {
+            postsAndCommentStatus !== 'displayPosts' 
+            &&
+            <button
+              className="w3-button w3-opacity w3-small w3-right"
+              onClick={()=> setPostsAndCommentStatus('displayPosts')}
+            >
+              关闭评论
+            </button>
+          }
+          <span className="w3-small w3-opacity w3-display-topright">
+            作者：匿名
+          </span>
         </div>
 
         { 
           postsAndCommentStatus === 'displayComments'
-  
           && 
-        
-            <Comment 
+          <Comment 
             setPostsAndCommentStatus={setPostsAndCommentStatus}
             postsAndCommentStatus={postsAndCommentStatus}
             comments={comments}
-            handleOpenCommentsClick={handleOpenCommentsClick}
             item={item}
-            />
+          />
         
         }
 

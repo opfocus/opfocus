@@ -1,76 +1,100 @@
-import { useState, useContext } from "react"
-import UserContext from "../../../../myFunciton/userContext"
+import { useState} from "react"
+import {app} from '../../../../../index'
+import {INSERT_COMMENT} from '../../../../../graphql-operations'
+import {useMutation} from '@apollo/client'
 
 
 function Comment({
-  setPostsAndCommentStatus,
   item,
   postsAndCommentStatus,
   comments,
-  handleOpenCommentsClick
   }) { 
-  const [newComment, setNewComment] = useState('')
-  const [account, setAccount] = useContext(UserContext)
-  
-  const handleSubmit = (e, item) => {
-    e.preventDefault()
+  const [newComment, setNewComment] = useState({
+    _id:"new1",
+    body: '',
+    user_nickname:"匿名"
+  })
+  // preComments use to keep watch over comments value change
+  const [preComments, setPreComments] = useState()
+  // tempComments use to display newComment first on screen, 
+  // because request from database too slowly 
+  const [tempComments, setTempComments] = useState()
 
-    const options = {
-      method: "post",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        title_id: item._id,
-        user_id: account._id,
-        user_nickname: account.nickname,
-        body: newComment,
-      })
-    }
-    setPostsAndCommentStatus('submiting')
-    fetch('http://localhost:3000/data/blog/comments/insert', options)
-    .then(() => handleOpenCommentsClick(item))
+  if (preComments !== comments){
+    setPreComments(comments)
+    setTempComments(comments)
+  }
+
+  const [insertOneComment, ] = useMutation(INSERT_COMMENT)
+  
+  const handleChange = (e) => {
+    setNewComment({...newComment, body: e.target.value})
+  }
+
+  const handleSubmit = async (e, item) => {
+    e.preventDefault()
+    setTempComments([...tempComments, newComment])
+    setNewComment({
+      _id: newComment._id + '1',
+      body: '',
+      user_nickname:"匿名"
+    })
+
+    await insertOneComment({
+      variables: {
+        mutation: {
+          title_id: item._id,
+          user_id: app.currentUser.id,
+          user_nickname: '匿名',
+          body: newComment.body,
+          like:1,
+          date: Date()
+        }
+      }
+    })
+
   }
 
   return (
     <div className="w3-container">
       {
-        comments.map(comment => 
+        tempComments
+        &&
+        tempComments.map(comment => 
         <div key={comment._id} className="w3-row w3-small w3-border-bottom">
           <span>
             {comment.body}     
           </span>
-          <span className="w3-right">
+          <span className="w3-right w3-opacity">
             <i class="fa-regular fa-user"></i>
             {' '}
-            <strong>{comment.user_nickname}</strong>
+            {comment.user_nickname}
           </span>
         </div>
         )
       }
 
-      <form>
+      <form onSubmit={(e) => handleSubmit(e, item)}>
         <textarea 
           rows="3" 
-          name="comment"
           className="w3-input w3-small"
           placeholder="登录状态下参与评论,长度少于20字符"
-          onChange={(e) => setNewComment(e.target.value)}
+          onChange={(e) => handleChange(e)}
+          value = {newComment.body}
         >
         </textarea>
         { 
-          newComment.length !== 0 
+          newComment.body.length !== 0 
           &&
-          newComment.length < 20
+          newComment.body.length < 20
           &&
           postsAndCommentStatus !== 'submiting' 
           &&
-          account
+          app.currentUser
           ?
             <input 
               type="submit"
               className="w3-button w3-right w3-small"
-              onClick={(e) => handleSubmit(e, item)}
             />
             :
             <input 

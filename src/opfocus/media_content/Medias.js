@@ -20,7 +20,7 @@ const initMedias = [{
 
 ]
 function Medias() {
-  const [Medias, setMedias] = useState(initMedias)
+  const [Medias, ] = useState(initMedias)
 
   return (
     <div>

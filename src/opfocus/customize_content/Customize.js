@@ -74,8 +74,9 @@ if(localStorage)
           </p>
           <ul>
             {
-              localData.map(item => (
+              localData.map((item,index) => (
                 <a 
+                  key={index}
                   className="text w3-button"
                   target="_blank"
                   href={item.customizeWebLink} 
