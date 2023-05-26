@@ -1,26 +1,35 @@
 // react
 import './mystyle.scss'
-import Header from './opfocus/header/Header'
-import Banner from './opfocus/banner/Banner'
-import Main from './opfocus/main_content/Main'
-import Welcome from './opfocus/welcome/Welcome'
-import Customize from './opfocus/customize_content/Customize'
-import Medias from './opfocus/media_content/Medias'
+import { useState, createContext} from 'react';
+import Chinese from './Chinese'
+import English from './English'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-function Opfocus() {
+export const LanguageContext = createContext()
 
+function App() {
+  const [language, setLanguage] = useState()
+  const value = [language, setLanguage]
   return (
-    <>
-      <Header />
-      <Banner/>
-      <div className='w3-auto'>
-        <Welcome/>
-        <Main/> 
-        <Customize/>
-        <Medias/>
-      </div>
-   </>
+    <LanguageContext.Provider value={value}>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path='/' 
+          element=<Navigate to="/zh"/>
+        />
+        <Route
+          path='/zh' 
+          element=<Chinese/>
+        />
+        <Route
+          path='/en'
+          element=<English/>
+        />
+      </Routes>
+    </BrowserRouter>
+    </LanguageContext.Provider>
   )
 }
 
-export default Opfocus
+export default App

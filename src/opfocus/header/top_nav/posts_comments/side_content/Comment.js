@@ -1,7 +1,8 @@
-import { useState} from "react"
+import { useContext, useState} from "react"
 import {app} from '../../../../../index'
 import {INSERT_COMMENT} from '../../../../../graphql-operations'
 import {useMutation} from '@apollo/client'
+import { LanguageContext } from "../../../../../App"
 
 
 function Comment({
@@ -14,6 +15,7 @@ function Comment({
     body: '',
     user_nickname:"匿名"
   })
+  const [language,] = useContext(LanguageContext)
   // preComments use to keep watch over comments value change
   const [preComments, setPreComments] = useState()
   // tempComments use to display newComment first on screen, 
@@ -66,9 +68,9 @@ function Comment({
             {comment.body}     
           </span>
           <span className="w3-right w3-opacity">
-            <i class="fa-regular fa-user"></i>
+            <i className="fa-regular fa-user"></i>
             {' '}
-            {comment.user_nickname}
+            {app.currentUser.id.slice(-5,)}
           </span>
         </div>
         )
@@ -78,15 +80,15 @@ function Comment({
         <textarea 
           rows="3" 
           className="w3-input w3-small"
-          placeholder="登录状态下参与评论,长度少于20字符"
           onChange={(e) => handleChange(e)}
           value = {newComment.body}
+          style={{resize: 'none'}}
         >
         </textarea>
         { 
           newComment.body.length !== 0 
           &&
-          newComment.body.length < 20
+          newComment.body.length < 200
           &&
           postsAndCommentStatus !== 'submiting' 
           &&
@@ -95,12 +97,20 @@ function Comment({
             <input 
               type="submit"
               className="w3-button w3-right w3-small"
+              value={
+                language === 'zh'?
+                "提交" : "Submit"
+              }
             />
             :
             <input 
             type="submit"
             className="w3-button w3-right w3-small"
             disabled
+            value={
+              language === 'zh'?
+              "提交" : "Submit"
+            }
           />  
         }
       </form>

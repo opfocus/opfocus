@@ -1,6 +1,7 @@
 
-import {useState } from "react"
-
+import {useContext, useState } from "react"
+import {FormattedMessage} from 'react-intl'
+import { LanguageContext } from "../../App"
 
 function Customize() {
   const [localData, setLocalData] =useState(
@@ -14,6 +15,7 @@ function Customize() {
     customizeWebName: '',
     customizeWebLink: ''
     })
+  const [language,] = useContext(LanguageContext)
  
   const handleNameChange = (e) => {
     setCustomizeWebData(
@@ -70,7 +72,10 @@ if(localStorage)
         &&
         <div className="w3-container w3-border-bottom">
           <p className="large-text">
-            自定义
+          <FormattedMessage
+            id="customize_title"
+            defaultMessage="自定义"
+          />
           </p>
           <ul>
             {
@@ -99,9 +104,9 @@ if(localStorage)
       >
       { 
         isInsertForm?
-        <i class="fa-solid fa-minus"></i>
+        <i className="fa-solid fa-minus"></i>
         :
-        <i class="fa-solid fa-plus"></i>
+        <i className="fa-solid fa-plus"></i>
       }
       </button>
     </div>
@@ -112,17 +117,26 @@ if(localStorage)
       <form >
         <div className="w3-row ">
           <label className="w3-input w3-col m4">
-            名称：
+            <FormattedMessage
+              id="website_add"
+              defaultMessage="名称："
+            />
             <input 
+              type='text'
               className="w3-input" 
               name="customizeWebName"
-              placeholder="删除只输入“名称”即可"
+              
               value= {customizeWebData.customizeWebName}
               onChange={(e) => handleNameChange(e)}
+              placeholder={language==='zh'? 
+                "删除时输入‘名称’即可" : "Just enter website when deleting"}
             />
           </label>
           <label className="w3-input w3-col m6">
-            网址：
+            <FormattedMessage 
+              id="link_add"
+              defaultMessage="网址"
+            />
             <input  
               className="w3-input"
               name="customizeWebLink"
@@ -141,14 +155,14 @@ if(localStorage)
             onClick={handleInsert}
             disabled
             >
-              <i class="fa-solid fa-plus"></i>
+              <i className="fa-solid fa-plus"></i>
             </button>
             :
             <button
               className="w3-button"
               onClick={handleInsert}
             >
-              <i class="fa-solid fa-plus"></i>
+              <i className="fa-solid fa-plus"></i>
             </button>
             }
             {
@@ -159,22 +173,24 @@ if(localStorage)
               onClick={handleDelete}
               disabled
               >
-                <i class="fa-solid fa-trash"></i>
+                <i className="fa-solid fa-trash"></i>
               </button>
               :
               <button
                 className="w3-button " 
                 onClick={handleDelete}
               >
-                <i class="fa-solid fa-trash"></i>
+                <i className="fa-solid fa-trash"></i>
               </button>              
             }
           </div>
         </div>
         <span className="w3-small w3-red">
-            *测试阶段您的自定义添加仅存储在本地缓存中，
-            如清除浏览器缓存数据将会消失，
-            </span>
+          <FormattedMessage
+            id="notification_add"
+            defaultMessage="*测试阶段您的自定义添加仅存储在本地缓存中，如清除浏览器缓存数据将会消失"
+          />  
+        </span>
       </form>
     } 
 

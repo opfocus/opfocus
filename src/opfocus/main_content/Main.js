@@ -1,23 +1,27 @@
 //!! need to be fixed when use database:The order of data returned by the database cannot be
 //!! -guaranteed
 // !!if can't access database ,should Adjust comment statement   use: [userdata] = usFetch('data.json')   
-import { useState, useEffect } from "react" 
+import { useState, useEffect, useContext } from "react" 
+import { LanguageContext } from "../../App"
 import List from "./List"
-let didInit = false
+
 function Main() {
   const [userdata, setUserData] = useState()
+  const [language,] = useContext(LanguageContext)
  
 
   useEffect(() => {
-    if (!didInit) {
-      didInit = true
       // fetch("http://localhost:3000/data/content_data")
        // if can't access database ,should use the following line -
+    if (language === 'zh')
       fetch("data.json")   
       .then((res) => res.json())
       .then((data) => setUserData(data))
-    }
-    },[])
+    else 
+    fetch("data_en.json")   
+    .then((res) => res.json())
+    .then((data) => setUserData(data))
+    },[language])
 
   if (userdata){
     const [root] = userdata.filter(data => data.id === '0000')

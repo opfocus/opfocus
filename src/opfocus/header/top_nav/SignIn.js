@@ -1,6 +1,7 @@
  // Currently, user registration and login are not provided, and users are anonymous
 //  
 import { useState, } from "react"
+import { FormattedMessage } from "react-intl"
 import {app} from '../../../index'
 
 function SignIn() {
@@ -8,6 +9,7 @@ function SignIn() {
   const [isUserInfo, setIsUserInfo] = useState(false) 
 
   return (
+    
     <div  style={{
       display:"inline-block",
       position:"relative"
@@ -17,7 +19,10 @@ function SignIn() {
         className="w3-btn"
         onClick={() => setIsUserInfo(!isUserInfo)}
       >
-        匿名
+        <FormattedMessage
+          id="user"
+          defaultMessage='匿名用户'
+        />
       </button>
       {
         isUserInfo

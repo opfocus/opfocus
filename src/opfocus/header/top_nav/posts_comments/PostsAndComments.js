@@ -1,15 +1,18 @@
-import { useState} from "react"
+import { useContext, useState} from "react"
 import Post from "./side_content/Post"
+import { FormattedMessage } from "react-intl"
 // graphql
 import {GET_POSTS, INSERT_POST} from '../../../../graphql-operations'
 import {useQuery, useMutation } from "@apollo/client"
 import { app } from "../../../../index"
+import { LanguageContext } from "../../../../App"
 
 
 
 
 function PostsAndComments() {
   const [isOpenPosts,setIsOpenPosts] = useState(false)
+  
 
 
   const {data} = useQuery(GET_POSTS)
@@ -47,6 +50,7 @@ function Posts({setIsOpenPosts, posts}) {
     title: '',
     body: ''
   })
+  const [language,] = useContext(LanguageContext)
   // prePosts use to  keep watch over  posts value change  
   const [prePosts, setPrePosts] = useState()
   // tempPosts use to add newPost to display on screen. it not
@@ -102,7 +106,7 @@ function Posts({setIsOpenPosts, posts}) {
             className="w3-button w3-opacity w3-display-topright"
             onClick={() => setIsOpenPosts(false)}
           >
-            <i class="fa-solid fa-x"></i>
+            <i className="fa-solid fa-x"></i>
           </button>
           {/* a button click will display the add post form */}
           {
@@ -111,14 +115,20 @@ function Posts({setIsOpenPosts, posts}) {
             className="w3-button w3-display-topleft w3-opacity"
             onClick={()=> setIsAddPost(false)}
             >
-              关闭
+              <FormattedMessage
+                id="post_close" 
+                defaultMessage='关闭'
+              />
             </button>
             :
             <button 
             className="w3-button w3-display-topleft w3-opacity"
             onClick={()=> setIsAddPost(true)}
            >
-            发帖
+              <FormattedMessage
+                id="post_open" 
+                defaultMessage='发帖'
+              />
           </button>
           }
   
@@ -130,20 +140,24 @@ function Posts({setIsOpenPosts, posts}) {
             onSubmit={(e) => handleSubmit(e)}
             >
               <label>
-                标题： 
+                <FormattedMessage
+                  id="post_title"
+                  defaultMessage='标题：'
+                /> 
                 <input
                 className="w3-input"
-                placeholder="需登录,长度少于20字符"
                 onChange={(e)=> handleTitleChange(e)}
                 value={newPost.title}
                   />
               </label>
               <label>
-                  正文： 
+                <FormattedMessage
+                  id="post_text"
+                  defaultMessage='正文：'
+                />
                   <textarea
                   rows= '5'
                   className="w3-input "
-                  placeholder="需登录,长度少于50字符"
                   onChange={(e) => handleTextChange(e)}
                   value={newPost.body}
                   style={{resize: 'none'}}
@@ -152,22 +166,30 @@ function Posts({setIsOpenPosts, posts}) {
               {
                 newPost.title.length > 0 
                 && 
-                newPost.title.length <= 20
+                newPost.title.length <= 100
                 &&
                 newPost.body.length > 0
                 &&
-                newPost.body.length <= 50
+                newPost.body.length <= 500
                 &&
                 app.currentUser
                 ?
                 <input 
-                type='submit'
+                  type='submit'
                   className="w3-button w3-right w3-small"
+                  value={
+                    language === 'zh'?
+                    "提交" : "Submit"
+                  }
                 />
                 :
                 <input
-                type='submit'
+                  type='submit'
                   className="w3-button w3-right w3-small"
+                  value={
+                    language === 'zh'?
+                    "提交" : "Submit"
+                  }
                   disabled
                 />
               }

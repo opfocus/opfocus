@@ -1,0 +1,86 @@
+[
+  {
+  "id": "0000",
+  "title": "root",
+  "link": "",
+  "child": ["0100", "0200", "0300", "0400"]
+  },
+  {
+    "id":"0100",
+    "title": "OP mainnet",
+    "link":"",
+    "child":["0101", "0102", "0103"]
+  },
+  {
+    "id": "0101",
+    "title": "Official",
+    "link": "https://www.optimism.io/",
+    "child":[]
+  },
+  {
+    "id": "0102",
+    "title": "OP Vote",
+    "link": "https://vote.optimism.io/",
+    "child":[]
+  },
+  {
+    "id": "0103",
+    "title": "OP Gas",
+    "link": "https://public-grafana.optimism.io/",
+    "child":[]
+  },
+  {
+    "id": "0200",
+    "title": "Base",
+    "link": "",
+    "child":["0201"]
+  },
+  {
+    "id": "0201",
+    "title": "Official",
+    "link": "https://base.org/",
+    "child":[]
+  },
+  {
+    "id": "0300",
+    "title": "Data",
+    "link": "",
+    "child":["0301", "0302", "0303"]
+  },
+  {
+    "id": "0301",
+    "title": "Defillama",
+    "link": "https://defillama.com",
+    "child":[]
+  },
+  {
+    "id": "0302",
+    "title": "L2beat",
+    "link": "https://l2beat.com/",
+    "child":[]
+  },
+  {
+    "id": "0303",
+    "title": "Debank",
+    "link": "https://debank.com/",
+    "child":[]
+  },
+  {
+    "id": "0400",
+    "title": "Tools",
+    "link": "",
+    "child":["0401", "0402"]
+  },
+  {
+    "id": "0401",
+    "title": "Revoke",
+    "link": "https://revoke.cash/",
+    "child":[]
+  },
+  {
+    "id": "0402",
+    "title": "ChainList",
+    "link": "https://chainlist.org/",
+    "child":[]
+  }
+]
