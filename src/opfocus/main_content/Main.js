@@ -13,7 +13,7 @@ function Main() {
   useEffect(() => {
       // fetch("http://localhost:3000/data/content_data")
        // if can't access database ,should use the following line -
-    if (language === 'zh')
+    if (language ==='zh')
       fetch("data.json")   
       .then((res) => res.json())
       .then((data) => setUserData(data))

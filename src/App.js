@@ -8,7 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 export const LanguageContext = createContext()
 
 function App() {
-  const [language, setLanguage] = useState()
+  const [language, setLanguage] = useState("zh")
   const value = [language, setLanguage]
   return (
     <LanguageContext.Provider value={value}>
