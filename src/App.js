@@ -3,7 +3,7 @@ import './mystyle.scss'
 import { useState, createContext} from 'react';
 import Chinese from './pages/Chinese'
 import English from './pages/English'
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {HashRouter , Routes, Route, Navigate } from "react-router-dom";
 
 export const LanguageContext = createContext()
 
@@ -12,7 +12,7 @@ function App() {
   const value = [language, setLanguage]
   return (
     <LanguageContext.Provider value={value}>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route
           path='/' 
@@ -27,7 +27,7 @@ function App() {
           element=<English/>
         />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
     </LanguageContext.Provider>
   )
 }
