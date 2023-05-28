@@ -1,8 +1,8 @@
 // react
 import './mystyle.scss'
 import { useState, createContext} from 'react';
-import Chinese from './Chinese'
-import English from './English'
+import Chinese from './pages/Chinese'
+import English from './pages/English'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const LanguageContext = createContext()

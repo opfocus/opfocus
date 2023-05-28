@@ -1,4 +1,3 @@
-import { useState } from "react"
 import Media from "./Media"
 import { FormattedMessage } from "react-intl"
 import { useContext } from "react"
@@ -7,8 +6,10 @@ import {LanguageContext} from '../../App'
 
 function Medias() {
   const [language,] = useContext(LanguageContext)  
+ 
   let initMedias 
-  if (language === 'zh')
+
+  if (language !== 'en'){
     initMedias = [{
       _id: '001',
       logo_img:'images/subli_logo.png'  ,
@@ -26,7 +27,8 @@ function Medias() {
       description: 'OP官方文章翻译至中文。subli乐观通讯翻译至中文'
     },
     ]
-  else 
+  }
+  else {
     initMedias = [{
       _id: '001',
       logo_img:'images/subli_logo.png'  ,
@@ -44,8 +46,7 @@ function Medias() {
       description: "Translate Subli's 'Optimistic Newsletter' and OP Official Newsletter into Chinese."
     },
     ]
-
-  const [Medias, ] = useState(initMedias)
+  }
 
   return (
     <div>
@@ -65,7 +66,7 @@ function Medias() {
       </div>
       <div className="medias">
         {
-          Medias.map(media => 
+          initMedias.map(media => 
             <Media 
               key={media._id}
               media={media}

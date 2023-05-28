@@ -1,12 +1,12 @@
-import Header from './opfocus/header/Header'
-import Banner from './opfocus/banner/Banner'
-import Main from './opfocus/main_content/Main'
-import Welcome from './opfocus/welcome/Welcome'
-import Customize from './opfocus/customize_content/Customize'
-import Medias from './opfocus/media_content/Medias'
+import Header from '../opfocus/header/Header'
+import Banner from '../opfocus/banner/Banner'
+import Main from '../opfocus/main_content/Main'
+import Welcome from '../opfocus/welcome/Welcome'
+import Customize from '../opfocus/customize_content/Customize'
+import Medias from '../opfocus/media_content/Medias'
 import { IntlProvider } from 'react-intl'
 import { useContext } from 'react'
-import { LanguageContext } from './App'
+import { LanguageContext } from '../App'
 
 function English() {
   const [language ,setLanguage] = useContext(LanguageContext)
