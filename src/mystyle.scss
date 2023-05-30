@@ -40,13 +40,16 @@ $media-pix: 24px;
   }
 }
 @mixin logo-sizes($val) {
-  @if $val == large {
+  @if $val == normal {
     width: 64px;
     height: 64px;
   }
-  @else  {
-    width: 32px;
+  @else if $val == small{
     height: 32px; 
+  }
+  @else {
+    width: 75px;
+    height: 75px; 
   }
 }
 body {
@@ -126,47 +129,93 @@ body {
   grid-column-gap: $media-pix;
   grid-row-gap: $media-pix;
 }
-  .media {
-    @extend .w3-card;
-    @extend .w3-round-medium;
-    text-decoration-line: none;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: $media-pix;
+.media {
+  @extend .w3-card;
+  @extend .w3-round-medium;
+  text-decoration-line: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: $media-pix;
 
-    .chain-logo{
-      @include logo-sizes(normal);
-      position: absolute;
-      top: $media-pix;
-      right: $media-pix;
-    }
+  .chain-logo{
+    @include logo-sizes(small);
+    @extend .w3-circle;
+    position: absolute;
+    top: $media-pix;
+    right: $media-pix;
 
-    .media-logo {
-    @include logo-sizes(large);
-    @extend .w3-round-medium;
-    }
+  }
 
-    .media-title {
-      @include font-sizes(medium);
-      @include font-weights(heavy);
-      font-style: italic;
-    }
-    
-    .media-description {
-      @include font-sizes(small)
-    }
+  .media-logo {
+  @include logo-sizes(normal);
+  @extend .w3-round-medium;
+  }
+
+  .media-title {
+    @include font-sizes(medium);
+    @include font-weights(heavy);
+    font-style: italic;
   }
   
-  @media screen and (max-width: 992px) {
-    .medias {
-      grid-template-columns: repeat(2, 1fr);
+  .media-description {
+    @include font-sizes(small)
   }
-  }
+}
+  
+.flex-analysis {
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
 
-  @media screen and (max-width: 700px) {
-    .medias {
-      grid-template-columns: repeat(1, 1fr);
+.analysis-image {
+  @include logo-sizes(large)
+}
+.search-button {
+  @extend .w3-button;
+  @extend .w3-border;
+  background-color: $mycolor;
+  @include font-weights(heavy)
+}
+.analysis-block  {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto;
+  justify-items: stretch;
+  margin: 0px;
+  grid-column-gap: $media-pix;
+  grid-row-gap: $media-pix;
+
+  .analysis {
+    text-decoration-line: none;
+    padding: $media-pix;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    @extend .w3-card;
+    @extend .w3-animate-bottom;
   }
+  .analysis-creator {
+    @include font-sizes(small)
   }
+}
+
+@media screen and (max-width: 992px) {
+  .medias {
+    grid-template-columns: repeat(2, 1fr);
+}
+  .analysis-block {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .medias {
+    grid-template-columns: repeat(1, 1fr);
+}
+  .analysis-block {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

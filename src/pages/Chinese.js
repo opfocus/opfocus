@@ -5,6 +5,8 @@ import Welcome from '../opfocus/welcome/Welcome'
 import Customize from '../opfocus/customize_content/Customize'
 import Medias from '../opfocus/media_content/Medias'
 import { IntlProvider } from 'react-intl'
+import Analysis from '../opfocus/dune_analysis/Analysis'
+import Footer from '../opfocus/footer/Footer'
 
 function Chinese() {
   const messagesInEnglish = {
@@ -24,6 +26,8 @@ function Chinese() {
         <Main/> 
         <Customize/>
         <Medias/>
+        <Analysis/>
+        <Footer/>
       </div>
    </IntlProvider>
   )

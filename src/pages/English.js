@@ -7,6 +7,8 @@ import Medias from '../opfocus/media_content/Medias'
 import { IntlProvider } from 'react-intl'
 import { useContext } from 'react'
 import { LanguageContext } from '../App'
+import Analysis from '../opfocus/dune_analysis/Analysis'
+import Footer from '../opfocus/footer/Footer'
 
 function English() {
   const [language ,setLanguage] = useContext(LanguageContext)
@@ -23,7 +25,6 @@ function English() {
     post_close: 'CLOSE',
     comment_open: 'comment',
     comment_close:'comment off',
-    post_author:"Author: {ts}",
     medias_section: 'Here is a list of media',
     medias_block_title: 'We have collected some media. They focus on creating content in one or more specific fields.',
     customize_title:"Customization",
@@ -31,7 +32,10 @@ function English() {
     link_add: "Link",
     notification_add: "* During the testing phase, your custom additions are only stored in local storage, if you clear the browser storage data will disappear",
     post_title: 'Title: ',
-    post_text:'Text: '
+    post_text:'Text: ',
+    dune_block_title: 'This is also a place where excellent creators gather, and I hope they can help you.',
+    dune_section:'Do you like Dune' ,
+    footer_section: 'Finally, welcome to leave a message in our discussion area.'
   }
   return (
     <IntlProvider
@@ -46,6 +50,8 @@ function English() {
         <Main/> 
         <Customize/>
         <Medias/>
+        <Analysis/>
+        <Footer/>
       </div>
    </IntlProvider>
   )

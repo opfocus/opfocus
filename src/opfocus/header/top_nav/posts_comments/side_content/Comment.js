@@ -70,7 +70,7 @@ function Comment({
           <span className="w3-right w3-opacity">
             <i className="fa-regular fa-user"></i>
             {' '}
-            {app.currentUser.id.slice(-5,)}
+            {comment._id.slice(-5,)}
           </span>
         </div>
         )

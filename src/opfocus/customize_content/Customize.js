@@ -70,19 +70,19 @@ if(localStorage)
       {
         localData
         &&
-        <div className="w3-container w3-border-bottom">
-          <p className="large-text">
+        <div className=" w3-bottombar">
+          <p className="large-text w3-container">
           <FormattedMessage
             id="customize_title"
             defaultMessage="自定义"
           />
           </p>
-          <ul>
+          <div className="w3-bar  w3-bottombar w3-black">
             {
               localData.map((item,index) => (
                 <a 
                   key={index}
-                  className="text w3-button"
+                  className="w3-button text w3-bar-item"
                   target="_blank"
                   href={item.customizeWebLink} 
                   rel="noreferrer"
@@ -92,7 +92,7 @@ if(localStorage)
                 )
               )
             }
-          </ul>
+          </div>
         </div>
       }
     {/* part2: a button when clicked, would display

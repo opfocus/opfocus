@@ -33,12 +33,14 @@ function Main() {
          {siblings.map(sibling => 
             <div 
               key={sibling.id} 
-              className="w3-border-bottom w3-container"
+              className="w3-border-bottom "
             >
-              <p className='large-text'>
+              <p className='large-text w3-container'>
                 {sibling.title}
               </p>
-              <List userdata={userdata} sibling={sibling} />
+              <div className="w3-bar  w3-bottombar w3-black">
+                <List userdata={userdata} sibling={sibling} />
+              </div>
             </div>
             )
           }
