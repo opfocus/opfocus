@@ -1,7 +1,8 @@
 // react
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+// import reportWebVitals from './reportWebVitals'
+import MyRouter from './App';
 
 //Realm: use to connect mongodabase  
 // https://www.mongodb.com/docs/realm/web/react-web-quickstart/
@@ -19,6 +20,8 @@ import {
 const APP_ID = 'application-test-ywalv'
 export const app = new Realm.App({ id: APP_ID });
 
+// all client requests to the GraphQL endpoint must be authenticated.
+// https://www.mongodb.com/docs/realm/web/graphql-apollo-react/
 const graphqlUri = 'https://realm.mongodb.com/api/client/v2.0/app/application-test-ywalv/graphql'
 const client = new ApolloClient({
   link: new HttpLink({
@@ -31,7 +34,6 @@ const client = new ApolloClient({
   }),
   cache: new InMemoryCache(),
 });
-
 
 // function: gets a valid Realm user access token to authenticate requests
 async function getValidAccessToken() {
@@ -52,19 +54,18 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <React.StrictMode>
-      <ApolloProvider client={client}>
-        <App/>
-      </ApolloProvider>
-  </React.StrictMode> 
+    <ApolloProvider client={client}>
+      <MyRouter />
+    </ApolloProvider>
+  </React.StrictMode>
 
 );
 
 // create-react-app comes with content, Commented out by me
-
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
+// reportWebVitals(console.log);
 
 
 
