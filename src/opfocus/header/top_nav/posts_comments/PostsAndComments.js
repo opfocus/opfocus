@@ -46,7 +46,8 @@ function Posts({ setIsOpenPosts, posts }) {
   const [newPost, setNewPost] = useState({
     _id: 'new1',
     title: '',
-    body: ''
+    body: '',
+    user_id: app.currentUser.id
   })
   const language = useContext(LanguageContext)
   // prePosts use to  keep watch over  posts value change  
@@ -77,7 +78,8 @@ function Posts({ setIsOpenPosts, posts }) {
     setNewPost({
       _id: newPost._id + '1',
       title: '',
-      body: ''
+      body: '',
+      user_id: app.currentUser.id
     })
     await insertOnePost({
       variables: {
